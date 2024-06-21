@@ -1,0 +1,6 @@
+@clodlog_backend_HostAddress = http://localhost:5075
+
+GET {{clodlog_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

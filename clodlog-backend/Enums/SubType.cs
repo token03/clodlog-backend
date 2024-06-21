@@ -1,0 +1,48 @@
+using System.ComponentModel;
+
+namespace clodlog_backend.Enums;
+
+public enum SubType
+{
+    [Description("ACE SPEC")] ACE_SPEC,
+    [Description("Ancient")] Ancient,
+    [Description("Basic")] Basic,
+    [Description("BREAK")] BREAK,
+    [Description("Baby")] Baby,
+    [Description("EX")] EX,
+    [Description("Eternamax")] Eternamax,
+    [Description("Fusion Strike")] FusionStrike,
+    [Description("Future")] Future,
+    [Description("GX")] GX,
+    [Description("Goldenrod Game Corner")] GoldenrodGameCorner,
+    [Description("Item")] Item,
+    [Description("LEGEND")] LEGEND,
+    [Description("Level-Up")] LevelUp,
+    [Description("MEGA")] MEGA,
+    [Description("Pokémon Tool")] PokemonTool,
+    [Description("Pokémon Tool F")] PokemonToolF,
+    [Description("Prime")] Prime,
+    [Description("Prism Star")] PrismStar,
+    [Description("Radiant")] Radiant,
+    [Description("Rapid Strike")] RapidStrike,
+    [Description("Restored")] Restored,
+    [Description("Rocket's Secret Machine")] RocketsSecretMachine,
+    [Description("SP")] SP,
+    [Description("Single Strike")] SingleStrike,
+    [Description("Special")] Special,
+    [Description("Stadium")] Stadium,
+    [Description("Stage 1")] Stage1,
+    [Description("Stage 2")] Stage2,
+    [Description("Star")] Star,
+    [Description("Supporter")] Supporter,
+    [Description("TAG TEAM")] TAGTEAM,
+    [Description("Team Plasma")] TeamPlasma,
+    [Description("Technical Machine")] TechnicalMachine,
+    [Description("Tera")] Tera,
+    [Description("Ultra Beast")] UltraBeast,
+    [Description("V")] V,
+    [Description("V-UNION")] V_UNION,
+    [Description("VMAX")] VMAX,
+    [Description("VSTAR")] VSTAR,
+    [Description("ex")] ex
+}
