@@ -5,7 +5,7 @@ namespace clodlog_backend.Models.Entities;
 public class SetImage
 {
     [JsonPropertyName("logo")]
-    public String Logo;
+    public String Logo { get; set; }
     [JsonPropertyName("symbol")]
-    public String Symbol;
+    public String Symbol { get; set; }
 }

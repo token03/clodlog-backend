@@ -1,10 +1,9 @@
 using System.Text.Json.Serialization;
-using clodlog_backend.Models.DTOs;
 using clodlog_backend.Models.Entities;
 
-namespace clodlog_backend.Models;
+namespace clodlog_backend.Models.DTOs;
 
-public class Set
+public class SetDTO
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }
@@ -35,8 +34,18 @@ public class Set
     
     [JsonPropertyName("ptcgoCode")]
     public string? PctgoCode { get; set;  }
-    
-    [JsonPropertyName("cards")]
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public IEnumerable<CardDTO>? Cards { get; set;  }
+
+    public SetDTO(Set set)
+    {
+        Id = set.Id;
+        Name = set.Name;
+        Series = set.Series;
+        PrintedTotal = set.PrintedTotal;
+        Total = set.Total;
+        ReleaseDate = set.ReleaseDate;
+        UpdatedAt = set.UpdatedAt;
+        Images = set.Images;
+        Legality = set.Legality;
+        PctgoCode = set.PctgoCode;
+    }
 }

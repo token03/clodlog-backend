@@ -1,12 +1,11 @@
 using System.Text.Json.Serialization;
 using clodlog_backend.Enums;
-using clodlog_backend.Models.DTOs;
 using clodlog_backend.Models.Entities;
 using clodlog_backend.Utils.Converters;
 
-namespace clodlog_backend.Models;
+namespace clodlog_backend.Models.DTOs;
 
-public class Card
+public class CardDTO
 {
     [JsonPropertyName("id")]
     public string Id { get; set; }
@@ -24,9 +23,6 @@ public class Card
 
     [JsonPropertyName("rules")]
     public List<String> Rules { get; set; }
-    
-    [JsonPropertyName("set")]
-    public SetDTO Set { get; set; }
     
     [JsonPropertyName("setId")]
     public string SetId { get; set; }
@@ -94,4 +90,34 @@ public class Card
 
     [JsonPropertyName("nationalPokedexNumbers")]
     public List<int> NationalPokedexNumbers { get; set; }
+    
+    public CardDTO (Card card)
+    {
+        Id = card.Id;
+        Name = card.Name;
+        SuperType = card.SuperType;
+        SubTypes = card.SubTypes;
+        Rules = card.Rules;
+        SetId = card.SetId;
+        Number = card.Number;
+        Artist = card.Artist;
+        Rarity = card.Rarity;
+        FlavorText = card.FlavorText;
+        Legalities = card.Legalities;
+        RegulationMark = card.RegulationMark;
+        Image = card.Image;
+        Level = card.Level;
+        Hp = card.Hp;
+        Types = card.Types;
+        EvolvesFrom = card.EvolvesFrom;
+        EvolvesTo = card.EvolvesTo;
+        AncientTrait = card.AncientTrait;
+        Abilities = card.Abilities;
+        Attacks = card.Attacks;
+        Weaknesses = card.Weaknesses;
+        Resistances = card.Resistances;
+        RetreatCost = card.RetreatCost;
+        ConvertedRetreatCost = card.ConvertedRetreatCost;
+        NationalPokedexNumbers = card.NationalPokedexNumbers;
+    }
 }

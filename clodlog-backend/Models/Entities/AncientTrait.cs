@@ -5,7 +5,7 @@ namespace clodlog_backend.Models.Entities;
 public class AncientTrait
 {
     [JsonPropertyName("name")]
-    public String Name;
+    public String Name { get; set; }
     [JsonPropertyName("text")]
-    public String Text;
+    public String Text { get; set; }
 }

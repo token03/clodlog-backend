@@ -6,7 +6,7 @@ namespace clodlog_backend.Models.Entities;
 public class CardImage
 {   
     [JsonPropertyName("small")]
-    public String Small;
+    public String Small { get; set; }
     [JsonPropertyName("large")]
-    public String Large;
+    public String Large { get; set; }
 }

@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using clodlog_backend.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +7,26 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add CardService
-builder.Services.AddSingleton<CardService>(sp => new CardService("pokemon-tcg-data/cards/en/"));
+builder.Services.AddSingleton<SetService>(sp => new SetService("pokemon-tcg-data/sets/"));
+builder.Services.AddSingleton<CardService>(sp => 
+{
+    var setService = sp.GetRequiredService<SetService>();
+    var cardService = new CardService("pokemon-tcg-data/cards/en/", setService);
+    setService.SetCardService(cardService);
+    return cardService;
+});
 
 // Add controllers
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policyBuilder =>
+    {
+        policyBuilder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
@@ -28,6 +38,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

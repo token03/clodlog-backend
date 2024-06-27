@@ -5,9 +5,9 @@ namespace clodlog_backend.Models.Entities;
 public class Ability
 {
     [JsonPropertyName("name")]
-    public String Name;
+    public String Name { get; set; }
     [JsonPropertyName("text")]
-    public String Text;
+    public String Text { get; set; }
     [JsonPropertyName("type")]
-    public String Type;
+    public String Type { get; set; }
 }
