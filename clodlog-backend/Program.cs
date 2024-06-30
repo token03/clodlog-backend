@@ -30,6 +30,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.Services.GetRequiredService<CardService>();
+app.Services.GetRequiredService<SetService>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

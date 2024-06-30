@@ -16,14 +16,12 @@ public class CardService
     public CardService(string dataPath, SetService setService)
     {
         _dataPath = dataPath;
-        
         _setService = setService;
-        
         _cards = new List<Card>();
         LoadCards();
     }
 
-    private void LoadCards()
+    public void LoadCards()
     {
         Console.WriteLine("Loading cards...");
         foreach (var file in Directory.GetFiles(_dataPath, "*.json"))
