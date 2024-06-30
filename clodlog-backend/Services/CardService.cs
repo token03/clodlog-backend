@@ -12,10 +12,11 @@ public class CardService
 {
     private readonly string _cardDataPath;
     private readonly string _priceDataPath;
-    private List<Card> _cards;
-    private readonly Dictionary<string, Dictionary<DateOnly, Dictionary<string, PriceDetails>>> _prices = new();
+    private readonly object _pricesLock = new object();
+    private readonly List<Card> _cards;
+    private readonly Dictionary<string, Dictionary<DateOnly, Dictionary<string, PriceDetails>>> _prices;
     private readonly SetService _setService;
-
+    
     public CardService(string cardDataPath, string priceDataPath, SetService setService)
     {
         _cardDataPath = cardDataPath;
@@ -64,8 +65,13 @@ public class CardService
 
     private void UpdateCardPrice(Card card)
     {
-        if (!_prices.TryGetValue(card.Id, out var cardPrices) || cardPrices.Count == 0) return;
+        Dictionary<DateOnly, Dictionary<string, PriceDetails>>? cardPrices;
+        lock (_pricesLock)
+        {
+            if (!_prices.TryGetValue(card.Id, out cardPrices) || cardPrices.Count == 0) return;
+        }
 
+        // We can safely work with cardPrices outside the lock as it's a copy
         DateOnly latestDate = cardPrices.Keys.Max();
         if (cardPrices.TryGetValue(latestDate, out var latestPrice))
         {
@@ -76,43 +82,40 @@ public class CardService
     private void LoadPrices()
     {
         Console.WriteLine("Loading prices...");
-        foreach (var setFolder in Directory.GetDirectories(_priceDataPath))
-        {
-            ProcessSetFolder(setFolder);
-        }
+        Parallel.ForEach(Directory.GetDirectories(_priceDataPath), ProcessSetFolder);
     }
 
     private void ProcessSetFolder(string setFolder)
     {
         string setId = Path.GetFileName(setFolder);
         Console.WriteLine($"Processing set: {setId}");
-
-        foreach (var file in Directory.GetFiles(setFolder, "*.json"))
-        {
-            ProcessPriceFile(file);
-        }
+        Parallel.ForEach(Directory.GetFiles(setFolder, "*.json"), ProcessPriceFile);
     }
 
     private void ProcessPriceFile(string file)
     {
-        Console.WriteLine($"Reading file: {file}");
         var json = File.ReadAllText(file);
         var priceData = JsonSerializer.Deserialize<PriceData>(json, GetJsonSerializerOptions());
-
         if (priceData == null) return;
 
-        _prices.TryAdd(priceData.Id, new Dictionary<DateOnly, Dictionary<string, PriceDetails>>());
-
-        priceData.PriceHistory ??= new Dictionary<string, Dictionary<string, PriceDetails>>();
-        foreach (var (dateString, priceDetails) in priceData.PriceHistory)
+        var cardPrices = new Dictionary<DateOnly, Dictionary<string, PriceDetails>>();
+        if (priceData.PriceHistory != null)
         {
-            DateOnly date = DateOnly.Parse(dateString);
-            _prices[priceData.Id][date] = priceDetails;
+            foreach (var (dateString, priceDetails) in priceData.PriceHistory)
+            {
+                if (DateOnly.TryParse(dateString, out DateOnly date))
+                {
+                    cardPrices[date] = priceDetails;
+                }
+            }
         }
 
-        Console.WriteLine($"Added prices for card: {priceData.Id}");
+        lock (_pricesLock)
+        {
+            _prices[priceData.Id] = cardPrices;
+        }
     }
-
+    
     private static JsonSerializerOptions GetJsonSerializerOptions()
     {
         return new JsonSerializerOptions
@@ -127,7 +130,6 @@ public class CardService
             }
         };
     }
-
  
     public async Task<IEnumerable<Card>> GetAllCardsAsync()
     {
