@@ -72,7 +72,6 @@ public class Card
     [JsonPropertyName("ancientTrait")]
     public AncientTrait AncientTrait { get; set; }
 
-
     [JsonPropertyName("abilities")]
     public List<Ability> Abilities { get; set; }
 
@@ -85,7 +84,6 @@ public class Card
     [JsonPropertyName("resistances")]
     public List<Resistance> Resistances { get; set; }
 
-
     [JsonPropertyName("retreatCost")]
     public List<string> RetreatCost { get; set; }
 
@@ -94,4 +92,7 @@ public class Card
 
     [JsonPropertyName("nationalPokedexNumbers")]
     public List<int> NationalPokedexNumbers { get; set; }
+    
+    [JsonPropertyName("prices")]
+    public Dictionary<string, PriceDetails> Prices { get; set; }
 }

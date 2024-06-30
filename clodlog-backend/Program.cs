@@ -11,7 +11,11 @@ builder.Services.AddSingleton<SetService>(sp => new SetService("pokemon-tcg-data
 builder.Services.AddSingleton<CardService>(sp => 
 {
     var setService = sp.GetRequiredService<SetService>();
-    var cardService = new CardService("pokemon-tcg-data/cards/en/", setService);
+    var cardService = new CardService (
+        "pokemon-tcg-data/cards/en/", 
+        "pokemon-tcg-data/prices/",
+        setService
+        );
     setService.SetCardService(cardService);
     return cardService;
 });

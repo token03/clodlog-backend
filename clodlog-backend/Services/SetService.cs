@@ -14,7 +14,7 @@ public class SetService
     {
         _dataPath = dataPath;
         _sets = new List<Set>();
-        LoadCards();
+        LoadSets();
     }
     
     public void SetCardService(CardService cardService)
@@ -22,7 +22,7 @@ public class SetService
         _cardService = cardService;
     }
 
-    private void LoadCards()
+    private void LoadSets()
     {
         Console.WriteLine("Loading sets...");
         foreach (var file in Directory.GetFiles(_dataPath, "*.json"))
