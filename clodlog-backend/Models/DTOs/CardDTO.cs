@@ -59,21 +59,20 @@ public class CardDTO
     [JsonConverter(typeof(EnumDescriptionListConverter<PokemonType>))]
     public List<PokemonType> Types { get; set; }
 
-    [JsonPropertyName("evolvesFrom")]
-    public string? EvolvesFrom { get; set; }
-
-    [JsonPropertyName("evolvesTo")]
-    public List<String> EvolvesTo { get; set; }
-
+    // [JsonPropertyName("evolvesFrom")]
+    // public string? EvolvesFrom { get; set; }
+    //
+    // [JsonPropertyName("evolvesTo")]
+    // public List<String> EvolvesTo { get; set; }
+    
     [JsonPropertyName("ancientTrait")]
     public AncientTrait AncientTrait { get; set; }
 
-
-    [JsonPropertyName("abilities")]
-    public List<Ability> Abilities { get; set; }
-
-    [JsonPropertyName("attacks")]
-    public List<Attack> Attacks { get; set; }
+    // [JsonPropertyName("abilities")]
+    // public List<Ability> Abilities { get; set; }
+    //
+    // [JsonPropertyName("attacks")]
+    // public List<Attack> Attacks { get; set; }
 
     [JsonPropertyName("weaknesses")]
     public List<Weakness> Weaknesses { get; set; }
@@ -90,6 +89,9 @@ public class CardDTO
 
     [JsonPropertyName("nationalPokedexNumbers")]
     public List<int> NationalPokedexNumbers { get; set; }
+    
+    [JsonPropertyName("prices")]
+    public Dictionary<string, PriceDetails> Prices { get; set; }
     
     public CardDTO (Card card)
     {
@@ -109,15 +111,16 @@ public class CardDTO
         Level = card.Level;
         Hp = card.Hp;
         Types = card.Types;
-        EvolvesFrom = card.EvolvesFrom;
-        EvolvesTo = card.EvolvesTo;
+        // EvolvesFrom = card.EvolvesFrom;
+        // EvolvesTo = card.EvolvesTo;
         AncientTrait = card.AncientTrait;
-        Abilities = card.Abilities;
-        Attacks = card.Attacks;
+        // Abilities = card.Abilities;
+        // Attacks = card.Attacks;
         Weaknesses = card.Weaknesses;
         Resistances = card.Resistances;
         RetreatCost = card.RetreatCost;
         ConvertedRetreatCost = card.ConvertedRetreatCost;
         NationalPokedexNumbers = card.NationalPokedexNumbers;
+        Prices = card.Prices;
     }
 }
