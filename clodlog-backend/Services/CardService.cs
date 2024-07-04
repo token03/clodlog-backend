@@ -223,6 +223,13 @@ public class CardService
                 _ => query
             };
         }
+        
+        if (!string.IsNullOrEmpty(criteria.Series))
+        {
+            var setsInSeries = await _setService.GetSetsBySeriesAsync(criteria.Series);
+            var setIdsInSeries = setsInSeries.Select(s => s.Id).ToList();
+            query = query.Where(c => setIdsInSeries.Contains(c.SetId));
+        }
 
         // Pagination
         if (criteria.Skip.HasValue)

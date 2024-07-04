@@ -76,4 +76,10 @@ public class SetService
         var result = await Task.FromResult(_sets.GroupBy(s => s.Series).ToDictionary(g => g.Key, g => g.ToList()));
         return result;
     }
+    
+    public async Task<List<Set>> GetSetsBySeriesAsync(string series)
+    {
+        var result = await Task.FromResult(_sets.Where(s => s.Series == series).ToList());
+        return result;
+    }
 }

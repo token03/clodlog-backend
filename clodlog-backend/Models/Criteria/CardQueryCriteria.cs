@@ -8,6 +8,7 @@ public class CardQueryCriteria
     public SuperType? SuperType { get; set; }
     public List<SubType>? SubTypes { get; set; }
     public string? SetId { get; set; }
+    public string? Series { get; set; }
     public Rarity? Rarity { get; set; }
     public string? Artist { get; set; }
     public List<PokemonType>? Types { get; set; }
