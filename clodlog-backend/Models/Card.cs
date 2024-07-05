@@ -95,4 +95,7 @@ public class Card
     
     [JsonPropertyName("prices")]
     public Dictionary<string, PriceDetails> Prices { get; set; }
+    
+    [JsonPropertyName("releasedDate")]
+    public string ReleasedDate { get; set; }
 }

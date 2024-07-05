@@ -93,6 +93,9 @@ public class CardDTO
     [JsonPropertyName("prices")]
     public Dictionary<string, PriceDetails> Prices { get; set; }
     
+    [JsonPropertyName("releaseDate")]
+    public string ReleaseDate { get; set; }
+    
     public CardDTO (Card card)
     {
         Id = card.Id;
@@ -122,5 +125,6 @@ public class CardDTO
         ConvertedRetreatCost = card.ConvertedRetreatCost;
         NationalPokedexNumbers = card.NationalPokedexNumbers;
         Prices = card.Prices;
+        ReleaseDate = card.ReleasedDate;
     }
 }
