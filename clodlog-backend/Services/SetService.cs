@@ -77,6 +77,12 @@ public class SetService
         return result;
     }
     
+    public async Task<List<String>> GetAllSetNamesAsync()
+    {
+        var result = await Task.FromResult(_sets.Select(s => s.Name).Distinct().ToList());
+        return result;
+    }
+    
     public async Task<Dictionary<string, List<Set>>> GetSeriesSetMapAsync()
     {
         var result = await Task.FromResult(_sets.GroupBy(s => s.Series).ToDictionary(g => g.Key, g => g.ToList()));

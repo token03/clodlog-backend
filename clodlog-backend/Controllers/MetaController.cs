@@ -18,35 +18,56 @@ public class MetaController : ControllerBase
     [HttpGet("series")]
     public async Task<IActionResult> GetAllSeriesNames()
     {
-        var seriesSetMap = await _setService.GetSeriesSetMapAsync();
-        return Ok(seriesSetMap);
+        var list = await _setService.GetAllSeriesNamesAsync();
+        return Ok(list);
     }
     
-    [HttpGet("set")]
+    [HttpGet("sets")]
     public async Task<IActionResult> GetAllSetNames()
     {
-        var seriesSetMap = await _setService.GetSeriesSetMapAsync();
-        return Ok(seriesSetMap);
+        var list = await _setService.GetAllSetNamesAsync();
+        return Ok(list);
     }
     
-    [HttpGet("rarity")]
+    [HttpGet("rarities")]
     public async Task<IActionResult> GetAllRarities()
     {
-        var seriesSetMap = await _setService.GetSeriesSetMapAsync();
-        return Ok(seriesSetMap);
+        var list = await  _cardService.GetRaritiesAsync();
+        return Ok(list);
     }
     
-    [HttpGet("superType")]
+    [HttpGet("supertypes")]
     public async Task<IActionResult> GetAllSuperTypes()
     {
-        var seriesSetMap = await _setService.GetSeriesSetMapAsync();
-        return Ok(seriesSetMap);
+        var list = await _cardService.GetSuperTypesAsync();
+        return Ok(list);
     }
     
-    [HttpGet("subType")]
+    [HttpGet("subtypes")]
     public async Task<IActionResult> GetAllSubTypes()
     {
-        var seriesSetMap = await _setService.GetSeriesSetMapAsync();
-        return Ok(seriesSetMap);
+        var list = await _cardService.GetSubTypesAsync();
+        return Ok(list);
+    }
+    
+    [HttpGet("hp")]
+    public async Task<IActionResult> GetAllHpValues()
+    {
+        var list = await _cardService.GetHpValuesAsync();
+        return Ok(list);
+    }
+    
+    [HttpGet("artists")]
+    public async Task<IActionResult> GetAllArtistNames()
+    {
+        var list = await _cardService.GetArtistsAsync();
+        return Ok(list);
+    }
+    
+    [HttpGet("types")]
+    public async Task<IActionResult> GetAllTypes()
+    {
+        var list = await _cardService.GetTypesAsync();
+        return Ok(list);
     }
 }

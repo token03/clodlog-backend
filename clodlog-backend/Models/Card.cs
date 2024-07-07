@@ -20,7 +20,7 @@ public class Card
 
     [JsonPropertyName("subtypes")]
     [JsonConverter(typeof(EnumDescriptionListConverter<SubType>))]
-    public List<SubType> SubTypes { get; set; }
+    public List<SubType>? SubTypes { get; set; }
 
     [JsonPropertyName("rules")]
     public List<String> Rules { get; set; }

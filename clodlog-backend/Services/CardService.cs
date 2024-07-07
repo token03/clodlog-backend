@@ -14,6 +14,14 @@ public class CardService
     private readonly string _priceDataPath;
     private readonly object _pricesLock = new object();
     private readonly List<Card> _cards;
+    private readonly HashSet<string> _types;
+    private readonly HashSet<string> _rarities;
+    private readonly HashSet<string> _superTypes;
+    private readonly HashSet<string> _subTypes;
+    private readonly HashSet<string> _hpValues;
+    private readonly HashSet<string> _artists;
+    
+    
     private readonly Dictionary<string, Dictionary<DateOnly, Dictionary<string, PriceDetails>>> _prices;
     private readonly SetService _setService;
     
@@ -24,6 +32,13 @@ public class CardService
         _setService = setService;
         _cards = new List<Card>();
         _prices = new Dictionary<string, Dictionary<DateOnly, Dictionary<string, PriceDetails>>>();
+        
+        _types = new HashSet<string>();
+        _rarities = new HashSet<string>();
+        _superTypes = new HashSet<string>();
+        _subTypes = new HashSet<string>();
+        _hpValues = new HashSet<string>();
+        _artists = new HashSet<string>();
 
         Initialize();
     }
@@ -56,6 +71,28 @@ public class CardService
         foreach (var card in cards)
         {
             card.SetId = setId;
+            _rarities.Add(card.Rarity.GetDescription());
+            _superTypes.Add(card.SuperType.GetDescription());
+            if (card.Types != null)
+            {
+                foreach (var type in card.Types)
+                {
+                    _types.Add(type.GetDescription());
+                }
+            }
+            if (card.SubTypes != null)
+            {
+                foreach (var subType in card.SubTypes)
+                {
+                    _subTypes.Add(subType.GetDescription());
+                }
+            }
+            if (!string.IsNullOrEmpty(card.Hp))
+            {
+                _hpValues.Add(card.Hp);
+            }
+            
+            _artists.Add(card.Artist);
             UpdateCardPrice(card);
         }
 
@@ -154,19 +191,34 @@ public class CardService
         return await Task.FromResult(_cards.Where(c => c.SetId == setId));
     }
     
-    public async Task<IEnumerable<Card>> GetCardsByNameAsync(string name)
+    public async Task<List<string>> GetRaritiesAsync()
     {
-        return await Task.FromResult(_cards.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)));
+        return await Task.FromResult(_rarities.ToList());
     }
     
-    public async Task<IEnumerable<Card>> GetCardsBySupertypeAsync(SuperType supertype)
+    public async Task<List<string>> GetSuperTypesAsync()
     {
-        return await Task.FromResult(_cards.Where(c => c.SuperType == supertype));
+        return await Task.FromResult(_superTypes.ToList());
     }
-
-    public async Task<IEnumerable<Card>> GetCardsByRarityAsync(Rarity rarity)
+    
+    public async Task<List<string>> GetSubTypesAsync()
     {
-        return await Task.FromResult(_cards.Where(c => c.Rarity == rarity));
+        return await Task.FromResult(_subTypes.ToList());
+    }
+    
+    public async Task<List<string>> GetHpValuesAsync()
+    {
+        return await Task.FromResult(_hpValues.ToList());
+    }
+    
+    public async Task<List<string>> GetArtistsAsync()
+    {
+        return await Task.FromResult(_artists.ToList());
+    }
+    
+    public async Task<List<string>> GetTypesAsync()
+    {
+        return await Task.FromResult(_types.ToList());
     }
     
     public async Task<IEnumerable<Card>> GetCardsByCriteriaAsync(CardQueryCriteria criteria)
