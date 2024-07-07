@@ -5,7 +5,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-RUN dotnet restore "clodlog-backend.csproj"
+COPY ["clodlog-backend/clodlog-backend.csproj", "clodlog-backend/"]
+RUN dotnet restore "clodlog-backend/clodlog-backend.csproj"
 COPY . .
 WORKDIR "/src/clodlog-backend"
 RUN dotnet build "clodlog-backend.csproj" -c Release -o /app/build
